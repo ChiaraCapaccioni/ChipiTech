@@ -1,0 +1,23 @@
+name: GitHub-Profile-Cards
+
+on:
+  schedule: # Esegue l'aggiornamento ogni 24 ore
+    - cron: "0 0 * * *"
+  workflow_dispatch: # Ti permette di avviarlo manualmente quando vuoi
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: generate-github-cards
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3 # Versione aggiornata per maggiore stabilità
+      
+      - name: Generate summary cards
+        uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUMMARY_CARDS_TOKEN }}
+        with:
+          USERNAME: ${{ github.repository_owner }}
